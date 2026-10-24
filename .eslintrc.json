@@ -1,0 +1,39 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
+  "rules": {
+    "eqeqeq": ["error", "always"],
+    "no-console": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/consistent-type-imports": ["error", { "fixStyle": "inline-type-imports" }]
+  },
+  "overrides": [
+    {
+      "files": ["src/db/migrate.ts", "src/db/seed.ts"],
+      "rules": { "no-console": "off" }
+    },
+    {
+      "files": ["tests/**/*.ts"],
+      "rules": { "@typescript-eslint/no-non-null-assertion": "off" }
+    },
+    {
+      "files": ["src/domain/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["next", "next/*", "react", "react-dom"],
+                "message": "Lapisan domain tidak boleh bergantung pada Next/React."
+              },
+              {
+                "group": ["@/app/*", "**/app/*"],
+                "message": "Lapisan domain tidak boleh mengimpor dari UI/route."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
